@@ -60,10 +60,14 @@ export interface CanisterSummary {
  * data needed by the SNS frontend dapp
  */
 export interface SnsdappSummary {
-  logo: string,
-  name: string,
-  symbol: string,
-  description: string,
+  // Authority?  Root canister?
+  logo: string;
+  // Authority?  Root canister?
+  name: string;
+  // Authority?  Root canister?
+  symbol: string;
+  // Authority?  Root canister?
+  description: string;
 }
 
 /**
@@ -73,22 +77,29 @@ export interface SnsdappSummary {
 export interface Dip20SnsSummary {
   // Base64 logo, stored by??
   // String length limit?
-  logo: string,
+  // Authority?  Root canister?
+  logo: string;
   // Common name, e.g. "Internet Computer"
   // String length limit?
-  name: string,
+  // Authority?  Root canister?
+  name: string;
   // Token name, e.g. "ICP"
   // Symbol length limit?
-  symbol: string,
+  // Authority?  Root canister?
+  symbol: string;
   // The equivalent of 8 for ICP?
   // Min: 0, Max: 255.
-  decimals: number,
+  // Authority?  Root canister?
+  decimals: number;
   // Note: this is presumably not fixed, although it will be fixed for the launch of a token.
-  totalSupply: bigint,
+  // Authority?  Root canister?
+  totalSupply: bigint;
   // What will this be?  Initially the developer, then the sns root canister?
-  owner: Principal,
+  // Authority?  Root canister?
+  owner: Principal;
   // Cost per transaction???
-  fee: bigint,
+  // Authority?  Root canister?
+  fee: bigint;
 }
 
 export type Principal = string;
