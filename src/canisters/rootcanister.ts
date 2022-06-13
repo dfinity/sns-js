@@ -51,7 +51,7 @@ export class SnsRootCanisterApi {
 }
 
 export interface CanisterSummary {
-        canisterId: string, // TODO: Use a specialised type
-        controller: string, // TODO: Special type
-        cycles: bignum,
+  canisterId: string; // TODO: Use a specialised type
+  controller: string; // TODO: Special type
+  cycles: bignum;
 }

@@ -1,17 +1,24 @@
 // Hard-wired list as a placeholder:
-const snsRootCanisters = [["abba", "ambrosia"]];
+const snsRootCanisters = [
+  // Page 1: (Realistically might have 500 entries per page)
+  ["abba-canister-id", "ambrosia-canister-id"],
+  // Page 2:
+  ["bucks-fizz-canister-id"],
+];
 
 /**
- * Calls the SNS manager to get a pageful of SNS canister IDs.
+ * Calls the SNS manager to get a pageful of SNS canister IDs.  Raw API call.
  *
  * Note: This is a raw API call.
  */
 export function getAPageOfSnsRootCanisters(pageNumber: number): Array<string> {
+  // TODO: When the snsmanager exists, make an API call to there.
+  // Note: No special permissions are required, no special key, no special agent, no caller ID.
   return snsRootCanisters[pageNumber] ?? [];
 }
 
 /**
- * Returns an iterator over all SNS root canisters.
+ * Returns an iterator over all SNS root canisters.  Wraps the paginated API.
  *
  * Usage:
  * for await (const snsRootCanisterId of listSnsRootCanisters()) {
