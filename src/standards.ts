@@ -1,7 +1,7 @@
 /**
  * Data needed by the SNS frontend dapp for token summaries.
  */
-export interface SnsDappSummary {
+export interface SnsSummary {
   // Authority?  Root canister?
   logo: string;
   // Authority?  Root canister?
