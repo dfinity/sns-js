@@ -1,7 +1,7 @@
 /**
  * Returns the details of an SNS canister, given by the root canister ID.
  */
-export function getSnsOverview(rootCanisterId: string) {
+export function getSnsOverview(rootCanisterId: string): SnsDappSummary {
   const rootCanister = new SnsRootCanisterApi(rootCanisterId);
   return rootCanister.getSnsCanistersSummary();
 }

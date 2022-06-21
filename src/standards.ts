@@ -9,7 +9,22 @@ export interface SnsDappSummary {
   // Authority?  Root canister?
   symbol: string;
   // Authority?  Root canister?
-  description: string;
+  url: string;
+  // Description
+  description?: string;
+}
+
+/**
+ * Data needed by the sns frontend dapp about the swap
+ * TODO: What is the authoritative source for this data?  Is there and SNS Swap spec?  URL please, and include it in this code.
+ */
+export interface SwapSummary {
+  // Commitments by all users or only the current user?
+  Commitments;
+  maxCommitments;
+  deadline;
+  status;
+  // etc .. waht else?
 }
 
 /**
@@ -35,14 +50,20 @@ export interface Dip20SnsSummary {
   decimals: number;
   // Note: this is presumably not fixed, although it will be fixed for the launch of a token.
   // Authority?  Root canister?
+  // Skip
   totalSupply: bigint;
   // What will this be?  Initially the developer, then the sns root canister?
-  // Authority?  Root canister?
+  // Authority?  Root canister? The root is owned by the sns controller.
   owner: Principal;
   // Cost per transaction???
   // Authority?  Root canister?
+  // Verify but we probably need this.
   fee: bigint;
 }
 
 // TODO: Use type from agentjs
 export type Principal = string;
+
+
+
+CanisterStatus <-- 

@@ -1,3 +1,6 @@
+/**
+ * Raw API: https://github.com/dfinity/ic/blob/master/rs/sns/root/canister/root.did
+ */
 export class SnsRootCanisterApi {
   canisterId: string;
 
@@ -8,7 +11,7 @@ export class SnsRootCanisterApi {
   async getSnsCanistersSummary() {
     // Note: This is a placeholder response but should resemble the real API response.
     return {
-      // TODO: Make a type for  acanister
+      // TODO: Make a type for a canister
       root: {
         canisterId: "rootCanisterIdPlaceholder",
         controller: "rootCanisterControllerPlaceholder",
