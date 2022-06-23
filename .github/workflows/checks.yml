@@ -42,7 +42,7 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  may-merge:
+  ci-checks-pass:
     needs: ["formatting", "lint"]
     runs-on: ubuntu-20.04
     steps:
