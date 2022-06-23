@@ -1,5 +1,3 @@
-
-
 /**
  * Data needed by the SNS frontend dapp for token summaries.
  */
