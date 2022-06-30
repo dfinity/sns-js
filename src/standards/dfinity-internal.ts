@@ -38,7 +38,7 @@ export interface SnsSummary {
 class SnsLogo {
   /**
    * Checks that a logo is valid; throws an error otherwise.
-   * 
+   *
    * - The logo should be a data URL.
    * - The image should be SVG.
    * - The encoding should be base64 (using additional characters +/ not the URL-safe variant -_ or any other).
@@ -46,16 +46,28 @@ class SnsLogo {
    */
   static checkValid(logo: string) {
     if (logo.length > SnsLogo.maxLength()) {
-      throw new Error(`SNS logo is too long: ${logo.length} > ${SnsLogo.maxLength()}`);
+      throw new Error(
+        `SNS logo is too long: ${logo.length} > ${SnsLogo.maxLength()}`
+      );
     }
     const prefix = "data:image/svg;base64,";
     if (!logo.startsWith(prefix)) {
-      throw new Error(`SNS logo has an incorect prefix.  Expected: '${prefix}...' Actual: '${logo.slice(0,20)}...'`);
+      throw new Error(
+        `SNS logo has an incorect prefix.  Expected: '${prefix}...' Actual: '${logo.slice(
+          0,
+          20
+        )}...'`
+      );
     }
     const base64Chars = "[0-9a-zA-Z+/]+=*";
     const urlPattern = new RegExp(`^${prefix}${base64Chars}$`);
     if (!urlPattern.test(logo)) {
-      throw new Error(`SNS logo should be a base64 encoded data URL, using +/ as the additional characters: '${logo.slice(0,30)}...'`);
+      throw new Error(
+        `SNS logo should be a base64 encoded data URL, using +/ as the additional characters: '${logo.slice(
+          0,
+          30
+        )}...'`
+      );
     }
   }
 
@@ -65,7 +77,7 @@ class SnsLogo {
    * Note: This limit is advisory.  In theory this limit will be added to a spec.  In practice each SNS canister that hosts such a URL may implement a different limit.
    */
   static maxLength(): number {
-    return (8<<10)-1;
+    return (8 << 10) - 1;
   }
 }
 
@@ -75,10 +87,14 @@ class SnsName {
    */
   static checkValid(name: string) {
     if (logo.length > SnsName.maxLength()) {
-      throw new Error(`SNS name is too long: ${name.length} > ${SnsName.maxLength()}`);
+      throw new Error(
+        `SNS name is too long: ${name.length} > ${SnsName.maxLength()}`
+      );
     }
     if (logo.length < SnsName.minLength()) {
-      throw new Error(`SNS name is too short: ${name.length} < ${SnsName.minLength()}`);
+      throw new Error(
+        `SNS name is too short: ${name.length} < ${SnsName.minLength()}`
+      );
     }
   }
 
@@ -108,13 +124,26 @@ class SnsTokenSymbol {
    */
   static checkValid(tokenSymbol: string): void {
     if (tokenSymbol.length > SnsTokenSymbol.maxLength()) {
-      throw new Error(`SNS token symbol '${tokenSymbol.slice(0, SnsTokenSymbol.maxLength())}...' is too long: Length ${tokenSymbol.length} > Max ${SnsTokenSymbol.maxLength()}`);
+      throw new Error(
+        `SNS token symbol '${tokenSymbol.slice(
+          0,
+          SnsTokenSymbol.maxLength()
+        )}...' is too long: Length ${
+          tokenSymbol.length
+        } > Max ${SnsTokenSymbol.maxLength()}`
+      );
     }
     if (tokenSymbol.length < SnsTokenSymbol.minLength()) {
-      throw new Error(`SNS token symbol '${tokenSymbol}' is too short: Length ${tokenSymbol.length} < Min ${SnsTokenSymbol.minLength()}`);
+      throw new Error(
+        `SNS token symbol '${tokenSymbol}' is too short: Length ${
+          tokenSymbol.length
+        } < Min ${SnsTokenSymbol.minLength()}`
+      );
     }
     if (!SnsTokenSymbol.pattern().test(tokenSymbol)) {
-      throw new Error(`SNS token symbol '${tokenSymbol}' MUST consist of capital ASCII characters: '${SnsTokenSymbol.pattern()}'`);
+      throw new Error(
+        `SNS token symbol '${tokenSymbol}' MUST consist of capital ASCII characters: '${SnsTokenSymbol.pattern()}'`
+      );
     }
   }
 
@@ -151,7 +180,11 @@ class SnsUrl {
     let parsed = new URL(url); // Will throw an error if malformed.
     let supportedProtocols = ["http:", "https:"];
     if (!supportedProtocols.contains(parsed.protocol)) {
-      throw new Error(`Unsupported protocol '${parsed.protocol}'.  Please use one of: ${supportedProtocols.join(", ")}`);
+      throw new Error(
+        `Unsupported protocol '${
+          parsed.protocol
+        }'.  Please use one of: ${supportedProtocols.join(", ")}`
+      );
     }
   }
 }
@@ -170,15 +203,19 @@ class SnsDescription {
    */
   static checkValid(description): void {
     if (description.length > SnsDescription.maxLength()) {
-      throw new Error(`SNS description is too long: Length ${description.length} > Max ${SnsDescription.maxLength()}`);
-    }   
+      throw new Error(
+        `SNS description is too long: Length ${
+          description.length
+        } > Max ${SnsDescription.maxLength()}`
+      );
+    }
   }
 
   /**
    * An SNS description should have modest length.
    */
   static maxLength() {
-    return (1 << 20)-1;
+    return (1 << 20) - 1;
   }
 }
 
