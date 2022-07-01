@@ -114,6 +114,3 @@ dist
 
 # Built documentation
 /docs/
-
-# Hidden files
-.*
