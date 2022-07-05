@@ -17,25 +17,39 @@ export interface SnsSummary {
   // The instant at which the swap is scheduled to take place.
   // Units: Seconds since the UNIX Epoch (1 Jan 1970)
   // Note: In future an SNS may have multiple token issuing events.  At present only a single decentralising tokenization event is supported.
-  swapDeadline: BigInt;
+  swapDeadline?: bigint;
   // The instance at which the SNS was created.
   // Units: Seconds since the UNIX Epoch (1 Jan 1970)
-  swapStart: BigInt;
+  swapStart?: bigint;
   // The minimum number of ICP that may be swapped for SNS tokens.
-  // Units: u8s.
-  swapMinCommitment;
-  // The maximum number of ICP that may be swapped for SNS tokens.
-  // Units: u8s.
-  swapMaxCommitment;
-  // TODO: Is the transaction fee measured in ICP or in SNS tokens?
-  // Units: u8s.
-  snsTransactionFee;
+  // Units: ICP u8s
+  swapMinCommitment: bigint;
+  // The maximum number of ICP that may be swapped for SNS tokens, in total, by all contributors.
+  // Units: ICP u8s
+  swapMaxCommitment: bigint;
+  // The maximum number of ICP that a single user (principal) may swap for SNS tokens.
+  // Units: ICP u8s
+  swapMaxCommitmentPerUser: bigint;
+  // The cost of making an STS token transaction.
+  // Units: SNS u8s
+  snsTransactionFee: bigint;
+}
+
+export interface SnsSwapState {
+  // The principal of the root canister.
+  rootCanisterId: Principal;
+  // The total of all commitments so far, by all contributors.
+  // Units: ICP u8s
+  currentCommitment: bigint;
+  // The calling user's commitment, if not called by the anonymous user.  
+  // Units: ICP u8s
+  myCommitment?: bigint;
 }
 
 /**
  * The SNS logo represents the decentralised service.
  */
-class SnsLogo {
+export class SnsLogo {
   /**
    * Checks that a logo is valid; throws an error otherwise.
    * 
@@ -67,17 +81,29 @@ class SnsLogo {
   static maxLength(): number {
     return (8<<10)-1;
   }
+
+  /**
+   * Checks whether an SVG image contains script tags or event handlers.  If so, this throws an error.
+   */
+  static checkNoScript(svg: string): void {
+    const doc = document.implementation.createHTMLDocument();
+    doc.body.innerHTML = svg; // Should not execute scripts such as onload.
+    
+  }
 }
 
-class SnsName {
+/**
+ * The full name of this SNS.
+ */
+export class SnsName {
   /**
    * An SNS may have any string name, using any characters, but of modest length.
    */
   static checkValid(name: string) {
-    if (logo.length > SnsName.maxLength()) {
+    if (name.length > SnsName.maxLength()) {
       throw new Error(`SNS name is too long: ${name.length} > ${SnsName.maxLength()}`);
     }
-    if (logo.length < SnsName.minLength()) {
+    if (name.length < SnsName.minLength()) {
       throw new Error(`SNS name is too short: ${name.length} < ${SnsName.minLength()}`);
     }
   }
@@ -102,7 +128,7 @@ class SnsName {
  * - The symbol SHOULD be aligned with the conventions of exchanges, as some tokens MAY theoretically be tradeable assets.
  * - The symbol SHOULD be easy to type on keyboards of any nation, so umlauts, ideograms, control sequences, invisible characters etc SHOULD not be used.
  */
-class SnsTokenSymbol {
+export class SnsTokenSymbol {
   /**
    * An SNS may have any string name, using any characters, but of modest length.
    */
@@ -143,13 +169,13 @@ class SnsTokenSymbol {
 /**
  * TODO: Are all URLs allowed?  E.g. data URLs?  Custom protocols?  For the time being I will assume http: and https: only.
  */
-class SnsUrl {
+export class SnsUrl {
   /**
    * Throws an error if the URL is invalid?
    */
   static checkValid(url): void {
-    let parsed = new URL(url); // Will throw an error if malformed.
-    let supportedProtocols = ["http:", "https:"];
+    const parsed = new URL(url); // Will throw an error if malformed.
+    const supportedProtocols = ["http:", "https:"];
     if (!supportedProtocols.contains(parsed.protocol)) {
       throw new Error(`Unsupported protocol '${parsed.protocol}'.  Please use one of: ${supportedProtocols.join(", ")}`);
     }
@@ -164,7 +190,7 @@ class SnsUrl {
  * `language` is the two letter ISO 639-1 country code as provided by `navigator.language.split(`-`,1)[0]`.  Sorry Yanks,
  * you might have to put up with British spelling on occasion.  Germans, god help you with Schweitzerdeutsch.
  */
-class SnsDescription {
+export class SnsDescription {
   /**
    * Throws an error if a description is invalid.
    */
@@ -185,8 +211,8 @@ class SnsDescription {
 /**
  * The instant, measured as seconds after the UNIX epoch, may blessigs be on its soul, at which the swap is scheduled to take place.
  */
-class SnsSwapDeadline {
-  static checkValid(deadline: BigInt) {
+export class SnsSwapDeadline {
+  static checkValid(_deadline: bigint) {
     // All times are theoretically valid.  New deadlines SHOULD be in the future.
   }
 }
