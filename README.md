@@ -1,5 +1,7 @@
 # sns-js
 
-A library for interfacing with a Service Nervous System (SNS) project.
+**DEPRECATED**
 
-This library is still in active development, and new features will incrementally be available.
+---
+
+Project has been moved to [ic-js](https://github.com/dfinity/ic-js) mono-repo.
